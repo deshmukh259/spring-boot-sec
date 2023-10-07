@@ -32,6 +32,6 @@ public class Config {
                 .hasAnyRole("ADMIN").anyRequest().authenticated();
         http.httpBasic();
         http.userDetailsService(inMemoryUserDetailsManager());
-        return http.build();
+        return http.build();///
     }
 }
