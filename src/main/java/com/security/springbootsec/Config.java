@@ -70,12 +70,25 @@ public class Config {
     @Order(1)
     public SecurityFilterChain securityFilterChain2(HttpSecurity http) throws Exception {
 
-        http.antMatcher("/**").addFilter(digestAuthenticationFilter())
+        http.antMatcher("/admin/**").addFilter(digestAuthenticationFilter())
                 .exceptionHandling()
                 .authenticationEntryPoint(digestAuthenticationEntryPoint()).and()
-                .authorizeRequests().antMatchers("/**")
+                .authorizeRequests().antMatchers("/admin/**")
                 .hasRole("ADMIN");
         return http.build();
 }
+
+    @Bean
+    @Order(2)
+    public SecurityFilterChain securityFilterChain4(HttpSecurity http) throws Exception {
+        http.authorizeRequests().antMatchers("/mylogin","/css/**","/webjars/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/mylogin");
+        return http.build();
+    }
 
 }
